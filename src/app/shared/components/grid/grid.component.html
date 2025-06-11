@@ -3,53 +3,50 @@
 
   @if (loading()) {
   <div class="loading">Carregando...</div>
+  } @else if (dados().length === 0) {
+  <div class="empty-state">Nenhum dado para exibir</div>
   } @else {
-  <div class="grid-content">
-    @if (dados().length > 0) {
-    <table class="simple-table">
-      <thead>
-        <tr>
-          @for (coluna of obterColunasComAcoes(); track coluna) { @if (coluna
-          === 'acoes') {
-          <th class="coluna-acoes">Ações</th>
-          } @else {
-          <th>{{ obterNomeColuna(coluna) }}</th>
-          } }
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of dados(); track $index) {
-        <tr>
-          @for (coluna of obterColunasComAcoes(); track coluna) { @if (coluna
-          === 'acoes') {
-          <td class="coluna-acoes">
-            <div class="acoes-container">
-              <button
-                class="btn-acao btn-editar"
-                (click)="aoEditar(item)"
-                title="Editar"
-              >
-                ✏️
-              </button>
-              <button
-                class="btn-acao btn-excluir"
-                (click)="aoExcluir(item)"
-                title="Excluir"
-              >
-                🗑️
-              </button>
-            </div>
-          </td>
-          } @else {
-          <td>{{ obterValorColuna(item, coluna) }}</td>
-          } }
-        </tr>
-        }
-      </tbody>
-    </table>
-    } @else {
-    <div class="empty-state">Nenhum dado para exibir</div>
-    }
-  </div>
+  <table class="simple-table">
+    <thead>
+      <tr>
+        @for (coluna of obterColunasComAcoes(); track coluna) { @if (coluna ===
+        'acoes') {
+        <th class="coluna-acoes">Ações</th>
+        } @else {
+        <th>{{ obterNomeColuna(coluna) }}</th>
+        } }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (item of dados(); track $index) {
+      <tr>
+        @for (coluna of obterColunasComAcoes(); track coluna) { @if (coluna ===
+        'acoes') {
+        <td class="coluna-acoes">
+          <div class="acoes-container">
+            <button
+              class="btn-acao btn-editar"
+              (click)="aoEditar(item)"
+              title="Editar"
+            >
+              ✏️
+            </button>
+            <button
+              class="btn-acao btn-excluir"
+              (click)="aoExcluir(item)"
+              title="Excluir"
+            >
+              🗑️
+            </button>
+          </div>
+        </td>
+        } @else {
+        <td>{{ obterValorColuna(item, coluna) }}</td>
+        } }
+      </tr>
+      }
+    </tbody>
+  </table>
   }
 </div>
