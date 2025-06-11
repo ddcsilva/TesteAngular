@@ -1,66 +1,66 @@
-// ===== CONTAINER PRINCIPAL =====
-.grid-container {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+// ===== MATERIAL DESIGN CARD =====
+mat-card {
   margin: 16px 0;
-  transition: box-shadow 0.3s ease;
+  padding: 0 !important;
   overflow: hidden;
 }
 
-.grid-container:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-// ===== ESTADOS =====
-.loading {
-  text-align: center;
+// ===== LOADING STATE =====
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 60px 20px;
-  color: #666;
-  font-size: 16px;
+
+  p {
+    margin-top: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+  }
 }
 
+// ===== EMPTY STATE =====
 .empty-state {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 80px 20px;
-  color: #999;
-  font-style: italic;
-  font-size: 16px;
+  color: rgba(0, 0, 0, 0.4);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
 }
 
-// ===== TABELA =====
-.grid-table {
+// ===== TABELA MATERIAL =====
+table {
   width: 100%;
-  border-collapse: collapse;
 }
 
-.grid-table th,
-.grid-table td {
-  padding: 16px 20px;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+// Cabeçalho com cor de fundo
+.mat-mdc-header-cell {
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+  background-color: #fafafa !important;
 }
 
-.grid-table th {
-  background-color: #fafafa;
-  font-weight: 600;
-  color: #333;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #e0e0e0;
+// Linhas do corpo sempre brancas
+.mat-mdc-row {
+  background-color: white !important;
 }
 
-.grid-table tbody tr:first-child td {
-  border-top: none;
-}
-
-.grid-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.grid-table tbody tr:hover {
-  background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
+.mat-mdc-row:hover {
+  background-color: #f8f9fa !important;
 }
 
 // ===== COLUNA DE AÇÕES =====
@@ -69,38 +69,7 @@
   width: 120px;
 }
 
-.acoes-container {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-acao {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  min-width: 32px;
-  height: 32px;
-}
-
-.btn-acao:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-1px);
-}
-
-.btn-editar:hover {
-  background-color: #e3f2fd;
-  color: #1976d2;
-}
-
-.btn-excluir:hover {
-  background-color: #ffebee;
-  color: #d32f2f;
+// Cabeçalho da coluna ações igual aos outros
+.mat-mdc-header-cell.coluna-acoes {
+  text-align: center !important;
 }

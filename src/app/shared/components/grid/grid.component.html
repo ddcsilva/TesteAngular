@@ -1,50 +1,54 @@
-<div class="grid-container">
+<mat-card>
   @if (loading()) {
-  <div class="loading">Carregando...</div>
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Carregando dados...</p>
+  </div>
   } @else if (dados().length === 0) {
-  <div class="empty-state">Nenhum dado para exibir</div>
+  <div class="empty-state">
+    <mat-icon>inbox</mat-icon>
+    <p>Nenhum dado para exibir</p>
+  </div>
   } @else {
-  <table class="grid-table">
-    <thead>
-      <tr>
-        @for (coluna of obterColunasComAcoes(); track coluna) { @if (coluna ===
-        'acoes') {
-        <th class="coluna-acoes">Ações</th>
-        } @else {
-        <th>{{ obterNomeColuna(coluna) }}</th>
-        } }
-      </tr>
-    </thead>
+  <table mat-table [dataSource]="dados()" class="mat-elevation-z0">
+    <!-- Colunas de Dados Dinâmicas -->
+    @for (coluna of colunas(); track coluna) {
+    <ng-container [matColumnDef]="coluna">
+      <th mat-header-cell *matHeaderCellDef>{{ obterNomeColuna(coluna) }}</th>
+      <td mat-cell *matCellDef="let element">
+        {{ obterValorColuna(element, coluna) }}
+      </td>
+    </ng-container>
+    }
 
-    <tbody>
-      @for (item of dados(); track $index) {
-      <tr>
-        @for (coluna of obterColunasComAcoes(); track coluna) { @if (coluna ===
-        'acoes') {
-        <td class="coluna-acoes">
-          <div class="acoes-container">
-            <button
-              class="btn-acao btn-editar"
-              (click)="aoEditar(item)"
-              title="Editar"
-            >
-              ✏️
-            </button>
-            <button
-              class="btn-acao btn-excluir"
-              (click)="aoExcluir(item)"
-              title="Excluir"
-            >
-              🗑️
-            </button>
-          </div>
-        </td>
-        } @else {
-        <td>{{ obterValorColuna(item, coluna) }}</td>
-        } }
-      </tr>
-      }
-    </tbody>
+    <!-- Coluna de Ações -->
+    @if (mostrarAcoes()) {
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef class="coluna-acoes">Ações</th>
+      <td mat-cell *matCellDef="let element" class="coluna-acoes">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="aoEditar(element)"
+          matTooltip="Editar"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="aoExcluir(element)"
+          matTooltip="Excluir"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    }
+
+    <!-- Definição das linhas -->
+    <tr mat-header-row *matHeaderRowDef="obterColunasComAcoes()"></tr>
+    <tr mat-row *matRowDef="let row; columns: obterColunasComAcoes()"></tr>
   </table>
   }
-</div>
+</mat-card>
