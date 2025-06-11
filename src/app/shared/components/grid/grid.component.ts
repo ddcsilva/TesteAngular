@@ -44,9 +44,6 @@ export class GridComponent<T = any> implements AfterViewInit {
   nomesColunas = input<Record<string, string>>({});
   mostrarAcoes = input<boolean>(false);
 
-  // Estado interno
-  loading = signal(false);
-
   // DataSource para a tabela Material com ordenação
   dataSource = new MatTableDataSource<T>([]);
 

@@ -1,10 +1,5 @@
 <mat-card>
-  @if (loading()) {
-  <div class="loading-container">
-    <mat-spinner diameter="40"></mat-spinner>
-    <p>Carregando dados...</p>
-  </div>
-  } @else if (dados().length === 0) {
+  @if (dados().length === 0) {
   <div class="empty-state">
     <mat-icon>inbox</mat-icon>
     <p>Nenhum dado para exibir</p>
