@@ -76,83 +76,84 @@ table {
 }
 
 // ===== ESTILOS PARA AÇÕES CUSTOMIZADAS =====
-::ng-deep .acoes-customizadas {
+:host ::ng-deep .acoes-customizadas {
   display: flex;
   gap: 4px;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 
-  .mat-mdc-icon-button {
-    width: 32px !important;
-    height: 32px !important;
-    padding: 0 !important;
-    background-color: transparent !important;
-    border: none !important;
+  // Seletor mais específico para override do Material Design
+  button.mat-mdc-icon-button {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 
     .mat-icon {
-      font-size: 18px !important;
-      width: 18px !important;
-      height: 18px !important;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
     }
 
     // Remove fundo padrão do Material
     .mat-mdc-button-persistent-ripple {
-      border-radius: 50% !important;
+      border-radius: 50%;
     }
 
+    // Hover padrão
     &:hover {
-      background-color: rgba(0, 0, 0, 0.04) !important;
+      background-color: rgba(0, 0, 0, 0.04);
     }
-  }
 
-  // Ação Visualizar (teal)
-  .btn-visualizar {
-    .mat-icon {
-      color: #009688 !important;
+    // Estados específicos por ação
+    &.btn-visualizar {
+      .mat-icon {
+        color: #009688;
+      }
+      &:hover {
+        background-color: rgba(0, 150, 136, 0.08);
+      }
     }
-    &:hover {
-      background-color: rgba(0, 150, 136, 0.08) !important;
-    }
-  }
 
-  // Ação Editar (azul)
-  .btn-editar {
-    .mat-icon {
-      color: #1976d2 !important;
+    &.btn-editar {
+      .mat-icon {
+        color: #1976d2;
+      }
+      &:hover {
+        background-color: rgba(25, 118, 210, 0.08);
+      }
     }
-    &:hover {
-      background-color: rgba(25, 118, 210, 0.08) !important;
-    }
-  }
 
-  // Ação Anexo (laranja)
-  .btn-anexo {
-    .mat-icon {
-      color: #ff9800 !important;
+    &.btn-anexo {
+      .mat-icon {
+        color: #ff9800;
+      }
+      &:hover {
+        background-color: rgba(255, 152, 0, 0.08);
+      }
     }
-    &:hover {
-      background-color: rgba(255, 152, 0, 0.08) !important;
-    }
-  }
 
-  // Ação Histórico (cinza)
-  .btn-historico {
-    .mat-icon {
-      color: #616161 !important;
+    &.btn-historico {
+      .mat-icon {
+        color: #616161;
+      }
+      &:hover {
+        background-color: rgba(97, 97, 97, 0.08);
+      }
     }
-    &:hover {
-      background-color: rgba(97, 97, 97, 0.08) !important;
-    }
-  }
 
-  // Ação Excluir (vermelho)
-  .btn-excluir {
-    .mat-icon {
-      color: #d32f2f !important;
-    }
-    &:hover {
-      background-color: rgba(211, 47, 47, 0.08) !important;
+    &.btn-excluir {
+      .mat-icon {
+        color: #d32f2f;
+      }
+      &:hover {
+        background-color: rgba(211, 47, 47, 0.08);
+      }
     }
   }
 }
