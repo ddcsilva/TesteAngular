@@ -1,0 +1,34 @@
+{
+  "pessoas": [
+    {
+      "id": 1,
+      "nome": "João Silva",
+      "idade": 30,
+      "dataNascimento": "1994-03-15"
+    },
+    {
+      "id": 2,
+      "nome": "Maria Santos",
+      "idade": 25,
+      "dataNascimento": "1999-07-22"
+    },
+    {
+      "id": 3,
+      "nome": "Pedro Oliveira",
+      "idade": 35,
+      "dataNascimento": "1989-11-08"
+    },
+    {
+      "id": 4,
+      "nome": "Ana Costa",
+      "idade": 28,
+      "dataNascimento": "1996-01-30"
+    },
+    {
+      "id": 5,
+      "nome": "Carlos Ferreira",
+      "idade": 42,
+      "dataNascimento": "1982-05-12"
+    }
+  ]
+}
