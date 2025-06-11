@@ -3,67 +3,67 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 24px;
   margin: 16px 0;
   transition: box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
 .grid-container:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-// ===== TÍTULO (removido, mas mantendo para flexibilidade futura) =====
-.grid-container h3 {
-  margin: 0 0 20px 0;
-  color: #333;
-  font-size: 18px;
-  font-weight: 500;
-}
-
 // ===== ESTADOS =====
 .loading {
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   color: #666;
   font-size: 16px;
 }
 
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
   color: #999;
   font-style: italic;
   font-size: 16px;
 }
 
 // ===== TABELA =====
-.simple-table {
+.grid-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 8px;
 }
 
-.simple-table th,
-.simple-table td {
-  padding: 12px 16px;
+.grid-table th,
+.grid-table td {
+  padding: 16px 20px;
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.simple-table th {
+.grid-table th {
   background-color: #fafafa;
   font-weight: 600;
   color: #333;
   font-size: 14px;
   letter-spacing: 0.5px;
+  border-bottom: 2px solid #e0e0e0;
 }
 
-.simple-table tbody tr:hover {
+.grid-table tbody tr:first-child td {
+  border-top: none;
+}
+
+.grid-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.grid-table tbody tr:hover {
   background-color: #f8f9fa;
   transition: background-color 0.2s ease;
 }
 
-.simple-table tbody tr:nth-child(even) {
+.grid-table tbody tr:nth-child(even) {
   background-color: #fdfdfd;
 }
 
