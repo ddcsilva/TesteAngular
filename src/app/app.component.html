@@ -15,6 +15,11 @@
       [colunas]="colunasGrid"
       [nomesColunas]="nomesColunasGrid"
       [mostrarAcoes]="true"
+      [serverSide]="true"
+      [totalRegistros]="totalRegistros()"
+      [paginaAtual]="paginaAtual()"
+      [tamanhoPagina]="tamanhoPagina()"
+      (paginaAlterada)="onPaginaAlterada($event)"
     >
     </app-grid>
     }

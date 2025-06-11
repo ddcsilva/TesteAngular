@@ -48,12 +48,25 @@
     <tr mat-row *matRowDef="let row; columns: obterColunasComAcoes()"></tr>
   </table>
 
-  <!-- Paginação -->
+  <!-- Paginação Condicional -->
+  @if (serverSide()) {
+  <!-- Paginação Server-side -->
+  <mat-paginator
+    [length]="totalRegistros()"
+    [pageIndex]="paginaAtual() - 1"
+    [pageSize]="tamanhoPagina()"
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    (page)="onPaginaAlterada($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+  } @else {
+  <!-- Paginação Client-side -->
   <mat-paginator
     [pageSizeOptions]="[5, 10, 20, 50]"
     [pageSize]="5"
     showFirstLastButtons
   >
   </mat-paginator>
-  }
+  } }
 </mat-card>

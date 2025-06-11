@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Pessoa } from '../models/pessoa.model';
+import { Observable, map, forkJoin } from 'rxjs';
+import { Pessoa, PaginatedResponse } from '../models/pessoa.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +34,29 @@ export class PessoaService {
   // Deletar pessoa
   deletarPessoa(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Obter pessoas com paginação (simulando server-side)
+  obterPessoasPaginadas(
+    page: number = 1,
+    limit: number = 5
+  ): Observable<PaginatedResponse<Pessoa>> {
+    return this.http.get<Pessoa[]>(this.apiUrl).pipe(
+      map((todasPessoas) => {
+        // Calcula índices para paginação
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+
+        // Slice dos dados para simular paginação
+        const dadosPaginados = todasPessoas.slice(startIndex, endIndex);
+
+        return {
+          data: dadosPaginados,
+          total: todasPessoas.length,
+          page: page,
+          limit: limit,
+        };
+      })
+    );
   }
 }

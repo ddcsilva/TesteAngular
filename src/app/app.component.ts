@@ -19,6 +19,11 @@ export class AppComponent implements OnInit {
   loading = signal(false);
   error = signal('');
 
+  // Signals para paginação server-side
+  paginaAtual = signal(1);
+  tamanhoPagina = signal(5);
+  totalRegistros = signal(0);
+
   // Colunas que queremos exibir (pode ser dinâmico baseado no objeto)
   colunasGrid = ['id', 'nome', 'idade', 'dataNascimento'];
 
@@ -40,9 +45,13 @@ export class AppComponent implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    this.pessoaService.obterTodasPessoas().subscribe({
-      next: (pessoas) => {
-        this.pessoas.set(pessoas);
+    const pagina = this.paginaAtual();
+    const tamanho = this.tamanhoPagina();
+
+    this.pessoaService.obterPessoasPaginadas(pagina, tamanho).subscribe({
+      next: (resultado) => {
+        this.pessoas.set(resultado.data);
+        this.totalRegistros.set(resultado.total);
         this.loading.set(false);
       },
       error: (err) => {
@@ -53,5 +62,12 @@ export class AppComponent implements OnInit {
         console.error('Erro:', err);
       },
     });
+  }
+
+  // Método para lidar com mudanças de página do grid
+  onPaginaAlterada(evento: { pagina: number; tamanho: number }) {
+    this.paginaAtual.set(evento.pagina);
+    this.tamanhoPagina.set(evento.tamanho);
+    this.carregarPessoas(); // Recarrega os dados com nova paginação
   }
 }

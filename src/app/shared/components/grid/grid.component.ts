@@ -6,6 +6,7 @@ import {
   effect,
   ViewChild,
   AfterViewInit,
+  output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
@@ -44,6 +45,15 @@ export class GridComponent<T = any> implements AfterViewInit {
   nomesColunas = input<Record<string, string>>({});
   mostrarAcoes = input<boolean>(false);
 
+  // Inputs para paginação server-side (opcionais)
+  totalRegistros = input<number>(0);
+  paginaAtual = input<number>(1);
+  tamanhoPagina = input<number>(5);
+  serverSide = input<boolean>(false);
+
+  // Output para comunicar mudanças de página
+  paginaAlterada = output<{ pagina: number; tamanho: number }>();
+
   // DataSource para a tabela Material com ordenação
   dataSource = new MatTableDataSource<T>([]);
 
@@ -59,9 +69,13 @@ export class GridComponent<T = any> implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Conecta o MatSort e MatPaginator com o dataSource
+    // Conecta o MatSort com o dataSource
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+
+    // Só conecta o paginator se for client-side
+    if (!this.serverSide()) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   // Método auxiliar para obter valor da coluna
@@ -79,6 +93,13 @@ export class GridComponent<T = any> implements AfterViewInit {
   obterNomeColuna(coluna: string): string {
     const nomes = this.nomesColunas();
     return nomes[coluna] || coluna;
+  }
+
+  // Método para lidar com mudanças de página (server-side)
+  onPaginaAlterada(event: any) {
+    const novaPagina = event.pageIndex + 1; // MatPaginator usa 0-based
+    const novoTamanho = event.pageSize;
+    this.paginaAlterada.emit({ pagina: novaPagina, tamanho: novoTamanho });
   }
 
   // Métodos para ações (sem funcionalidade ainda)
