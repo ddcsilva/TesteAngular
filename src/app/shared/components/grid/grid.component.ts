@@ -12,6 +12,7 @@ export class GridComponent<T = any> {
   // Inputs usando signals
   dados = input<T[]>([]);
   colunas = input<string[]>([]);
+  nomesColunas = input<Record<string, string>>({});
   mostrarAcoes = input<boolean>(false);
 
   // Estado interno
@@ -30,12 +31,18 @@ export class GridComponent<T = any> {
     return this.mostrarAcoes() ? [...colunas, 'acoes'] : colunas;
   }
 
+  // Método para obter nome customizado da coluna
+  obterNomeColuna(coluna: string): string {
+    const nomes = this.nomesColunas();
+    return nomes[coluna] || coluna;
+  }
+
   // Métodos para ações (sem funcionalidade ainda)
-  onEditar(item: T) {
+  aoEditar(item: T) {
     console.log('Editar item:', item);
   }
 
-  onExcluir(item: T) {
+  aoExcluir(item: T) {
     console.log('Excluir item:', item);
   }
 }

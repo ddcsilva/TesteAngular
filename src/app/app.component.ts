@@ -22,6 +22,14 @@ export class AppComponent implements OnInit {
   // Colunas que queremos exibir (pode ser dinâmico baseado no objeto)
   colunasGrid = ['id', 'nome', 'idade', 'dataNascimento'];
 
+  // Nomes customizados das colunas
+  nomesColunasGrid = {
+    id: 'ID',
+    nome: 'Nome Completo',
+    idade: 'Idade',
+    dataNascimento: 'Data de Nascimento',
+  };
+
   constructor(private pessoaService: PessoaService) {}
 
   ngOnInit() {
@@ -38,10 +46,12 @@ export class AppComponent implements OnInit {
         this.loading.set(false);
       },
       error: (err) => {
-        this.error.set('Erro ao carregar dados. Verifique se o json-server está rodando.');
+        this.error.set(
+          'Erro ao carregar dados. Verifique se o json-server está rodando.'
+        );
         this.loading.set(false);
         console.error('Erro:', err);
-      }
+      },
     });
   }
 }

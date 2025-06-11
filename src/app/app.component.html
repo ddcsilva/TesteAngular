@@ -10,7 +10,12 @@
     <div class="error">{{ error() }}</div>
     <button (click)="carregarPessoas()">Tentar Novamente</button>
     } @else {
-    <app-grid [dados]="pessoas()" [colunas]="colunasGrid" [mostrarAcoes]="true">
+    <app-grid
+      [dados]="pessoas()"
+      [colunas]="colunasGrid"
+      [nomesColunas]="nomesColunasGrid"
+      [mostrarAcoes]="true"
+    >
     </app-grid>
     }
   </main>

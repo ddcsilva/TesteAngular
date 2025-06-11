@@ -17,12 +17,6 @@
   color: #666;
 }
 
-.grid-content p {
-  margin: 4px 0;
-  color: #666;
-  font-size: 14px;
-}
-
 .simple-table {
   width: 100%;
   border-collapse: collapse;
@@ -33,7 +27,8 @@
 .simple-table td {
   padding: 8px 12px;
   text-align: left;
-  border: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .simple-table th {
@@ -59,7 +54,7 @@
 
 // Estilos para coluna de ações
 .coluna-acoes {
-  text-align: center;
+  text-align: center !important;
   width: 120px;
 }
 

@@ -5,9 +5,6 @@
   <div class="loading">Carregando...</div>
   } @else {
   <div class="grid-content">
-    <p>Colunas: {{ colunas().length }}</p>
-    <p>Dados: {{ dados().length }} itens</p>
-
     @if (dados().length > 0) {
     <table class="simple-table">
       <thead>
@@ -16,7 +13,7 @@
           === 'acoes') {
           <th class="coluna-acoes">Ações</th>
           } @else {
-          <th>{{ coluna | titlecase }}</th>
+          <th>{{ obterNomeColuna(coluna) }}</th>
           } }
         </tr>
       </thead>
@@ -29,14 +26,14 @@
             <div class="acoes-container">
               <button
                 class="btn-acao btn-editar"
-                (click)="onEditar(item)"
+                (click)="aoEditar(item)"
                 title="Editar"
               >
                 ✏️
               </button>
               <button
                 class="btn-acao btn-excluir"
-                (click)="onExcluir(item)"
+                (click)="aoExcluir(item)"
                 title="Excluir"
               >
                 🗑️
