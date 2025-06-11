@@ -1,12 +1,12 @@
 import {
   Component,
   input,
-  signal,
-  computed,
   effect,
   ViewChild,
   AfterViewInit,
   output,
+  ContentChild,
+  TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
@@ -53,6 +53,14 @@ export class GridComponent<T = any> implements AfterViewInit {
 
   // Output para comunicar mudanças de página
   paginaAlterada = output<{ pagina: number; tamanho: number }>();
+
+  // Outputs para ações customizáveis
+  editar = output<T>();
+  excluir = output<T>();
+  acaoCustomizada = output<{ acao: string; item: T }>();
+
+  // Template customizado para ações
+  @ContentChild('acoesTemplate') acoesTemplate?: TemplateRef<any>;
 
   // DataSource para a tabela Material com ordenação
   dataSource = new MatTableDataSource<T>([]);
@@ -102,12 +110,17 @@ export class GridComponent<T = any> implements AfterViewInit {
     this.paginaAlterada.emit({ pagina: novaPagina, tamanho: novoTamanho });
   }
 
-  // Métodos para ações (sem funcionalidade ainda)
+  // Métodos para ações - emitem eventos para o componente pai
   aoEditar(item: T) {
-    console.log('Editar item:', item);
+    this.editar.emit(item);
   }
 
   aoExcluir(item: T) {
-    console.log('Excluir item:', item);
+    this.excluir.emit(item);
+  }
+
+  // Método para ações customizadas
+  aoAcaoCustomizada(acao: string, item: T) {
+    this.acaoCustomizada.emit({ acao, item });
   }
 }

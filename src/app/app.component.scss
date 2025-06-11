@@ -1,20 +1,17 @@
 .app-container {
+  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 header {
-  text-align: center;
-  margin-bottom: 40px;
-}
+  margin-bottom: 20px;
 
-header h1 {
-  color: #333;
-  font-size: 28px;
-  font-weight: 300;
-  margin: 0;
+  h1 {
+    color: #333;
+    font-weight: 300;
+  }
 }
 
 main {
@@ -24,17 +21,18 @@ main {
 .loading {
   text-align: center;
   padding: 40px;
+  font-size: 16px;
   color: #666;
-  font-size: 18px;
 }
 
 .error {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
   text-align: center;
+  padding: 40px;
+  color: #f44336;
+
+  button {
+    margin-top: 16px;
+  }
 }
 
 button {
@@ -76,22 +74,6 @@ button {
 
 button:hover {
   background-color: #0056b3;
-}
-
-.loading {
-  text-align: center;
-  font-size: 18px;
-  color: #666;
-  padding: 20px;
-}
-
-.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  text-align: center;
 }
 
 .empty {

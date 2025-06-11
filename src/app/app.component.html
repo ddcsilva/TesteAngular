@@ -20,7 +20,58 @@
       [paginaAtual]="paginaAtual()"
       [tamanhoPagina]="tamanhoPagina()"
       (paginaAlterada)="onPaginaAlterada($event)"
+      (editar)="onEditar($event)"
+      (excluir)="onExcluir($event)"
+      (acaoCustomizada)="onAcaoCustomizada($event)"
     >
+      <!-- Template Customizado para Ações -->
+      <ng-template #acoesTemplate let-pessoa>
+        <div class="acoes-customizadas">
+          <!-- Ação Visualizar -->
+          <button
+            mat-icon-button
+            class="btn-visualizar"
+            (click)="onAcaoCustomizada({ acao: 'visualizar', item: pessoa })"
+            matTooltip="Visualizar Detalhes"
+            matTooltipPosition="above"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+
+          <!-- Ação Editar -->
+          <button
+            mat-icon-button
+            class="btn-editar"
+            (click)="onEditar(pessoa)"
+            matTooltip="Editar Pessoa"
+            matTooltipPosition="above"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <!-- Ação Anexos -->
+          <button
+            mat-icon-button
+            class="btn-anexo"
+            (click)="onAcaoCustomizada({ acao: 'anexo', item: pessoa })"
+            matTooltip="Gerenciar Anexos"
+            matTooltipPosition="above"
+          >
+            <mat-icon>attach_file</mat-icon>
+          </button>
+
+          <!-- Ação Excluir -->
+          <button
+            mat-icon-button
+            class="btn-excluir"
+            (click)="onExcluir(pessoa)"
+            matTooltip="Excluir Pessoa"
+            matTooltipPosition="above"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </ng-template>
     </app-grid>
     }
   </main>

@@ -23,6 +23,13 @@
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef class="coluna-acoes">Ações</th>
       <td mat-cell *matCellDef="let element" class="coluna-acoes">
+        @if (acoesTemplate) {
+        <!-- Template Customizado -->
+        <ng-container
+          *ngTemplateOutlet="acoesTemplate; context: { $implicit: element }"
+        ></ng-container>
+        } @else {
+        <!-- Ações Padrão -->
         <button
           mat-icon-button
           color="primary"
@@ -39,6 +46,7 @@
         >
           <mat-icon>delete</mat-icon>
         </button>
+        }
       </td>
     </ng-container>
     }
