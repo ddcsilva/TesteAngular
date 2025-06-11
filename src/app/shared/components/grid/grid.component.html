@@ -10,11 +10,13 @@
     <p>Nenhum dado para exibir</p>
   </div>
   } @else {
-  <table mat-table [dataSource]="dados()" class="mat-elevation-z0">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
     <!-- Colunas de Dados Dinâmicas -->
     @for (coluna of colunas(); track coluna) {
     <ng-container [matColumnDef]="coluna">
-      <th mat-header-cell *matHeaderCellDef>{{ obterNomeColuna(coluna) }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ obterNomeColuna(coluna) }}
+      </th>
       <td mat-cell *matCellDef="let element">
         {{ obterValorColuna(element, coluna) }}
       </td>
