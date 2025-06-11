@@ -1,27 +1,19 @@
-<div class="container">
-  <h1>{{ title }}</h1>
-  <h2>Lista de Pessoas</h2>
+<div class="app-container">
+  <header>
+    <h1>{{ title }}</h1>
+  </header>
 
-  <button (click)="carregarPessoas()">Recarregar Pessoas</button>
-
-  <div *ngIf="loading" class="loading">Carregando pessoas...</div>
-
-  <div *ngIf="error" class="error">
-    {{ error }}
-  </div>
-
-  <div *ngIf="!loading && pessoas.length > 0" class="pessoas-list">
-    <div *ngFor="let pessoa of pessoas" class="pessoa-card">
-      <h3>{{ pessoa.nome }}</h3>
-      <p><strong>ID:</strong> {{ pessoa.id }}</p>
-      <p><strong>Idade:</strong> {{ pessoa.idade }} anos</p>
-      <p><strong>Data de Nascimento:</strong> {{ pessoa.dataNascimento }}</p>
-    </div>
-  </div>
-
-  <div *ngIf="!loading && pessoas.length === 0 && !error" class="empty">
-    Nenhuma pessoa encontrada.
-  </div>
+  <main>
+    @if (loading()) {
+    <div class="loading">Carregando dados...</div>
+    } @else if (error()) {
+    <div class="error">{{ error() }}</div>
+    <button (click)="carregarPessoas()">Tentar Novamente</button>
+    } @else {
+    <app-grid [dados]="pessoas()" [colunas]="colunasGrid" [mostrarAcoes]="true">
+    </app-grid>
+    }
+  </main>
 </div>
 
 <router-outlet></router-outlet>

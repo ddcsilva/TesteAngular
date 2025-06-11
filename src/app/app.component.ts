@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { PessoaService } from './services/pessoa.service';
+import { GridComponent } from './shared/components/grid/grid.component';
 import { Pessoa } from './models/pessoa.model';
+import { PessoaService } from './services/pessoa.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, GridComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'Teste';
-  pessoas: Pessoa[] = [];
-  loading = false;
-  error = '';
+  title = 'Sistema de Grid';
+
+  // Usando signals para os dados
+  pessoas = signal<Pessoa[]>([]);
+  loading = signal(false);
+  error = signal('');
+
+  // Colunas que queremos exibir (pode ser dinâmico baseado no objeto)
+  colunasGrid = ['id', 'nome', 'idade', 'dataNascimento'];
 
   constructor(private pessoaService: PessoaService) {}
 
@@ -24,20 +29,19 @@ export class AppComponent implements OnInit {
   }
 
   carregarPessoas() {
-    this.loading = true;
-    this.error = '';
+    this.loading.set(true);
+    this.error.set('');
 
     this.pessoaService.obterTodasPessoas().subscribe({
       next: (pessoas) => {
-        this.pessoas = pessoas;
-        this.loading = false;
+        this.pessoas.set(pessoas);
+        this.loading.set(false);
       },
       error: (err) => {
-        this.error =
-          'Erro ao carregar pessoas. Verifique se o json-server está rodando.';
-        this.loading = false;
+        this.error.set('Erro ao carregar dados. Verifique se o json-server está rodando.');
+        this.loading.set(false);
         console.error('Erro:', err);
-      },
+      }
     });
   }
 }

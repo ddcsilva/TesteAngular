@@ -1,0 +1,95 @@
+.grid-container {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.grid-container h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.grid-content p {
+  margin: 4px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.simple-table th,
+.simple-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.simple-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.simple-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.simple-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-style: italic;
+}
+
+// Estilos para coluna de ações
+.coluna-acoes {
+  text-align: center;
+  width: 120px;
+}
+
+.acoes-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-acao {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.btn-acao:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-editar:hover {
+  background-color: #e3f2fd;
+}
+
+.btn-excluir:hover {
+  background-color: #ffebee;
+}
