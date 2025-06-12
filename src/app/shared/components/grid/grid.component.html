@@ -1,64 +1,55 @@
-<mat-card>
-  @if (dados().length === 0) {
+<mat-card appearance="outlined">
+  @if (carregando()) {
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Carregando dados...</p>
+  </div>
+  } @else if (dados().length === 0) {
   <div class="empty-state">
     <mat-icon>inbox</mat-icon>
     <p>Nenhum dado para exibir</p>
   </div>
   } @else {
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
-    <!-- Colunas de Dados Dinâmicas -->
-    @for (coluna of colunas(); track coluna) {
-    <ng-container [matColumnDef]="coluna">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ obterNomeColuna(coluna) }}
-      </th>
-      <td mat-cell *matCellDef="let element">
-        {{ obterValorColuna(element, coluna) }}
-      </td>
-    </ng-container>
-    }
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+      @for (coluna of colunas(); track coluna) {
+      <ng-container [matColumnDef]="coluna">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ obterNomeColuna(coluna) }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ obterValorColuna(element, coluna) }}
+        </td>
+      </ng-container>
+      } @if (mostrarAcoes()) {
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef class="coluna-acoes">Ações</th>
+        <td mat-cell *matCellDef="let element" class="coluna-acoes">
+          <app-acoes-grid
+            [item]="element"
+            [mostrarEditar]="mostrarEditar()"
+            [mostrarExcluir]="mostrarExcluir()"
+            [mostrarCortar]="mostrarCortar()"
+            [mostrarVisualizar]="mostrarVisualizar()"
+            [mostrarAnexo]="mostrarAnexo()"
+            [mostrarOperacoes]="mostrarOperacoes()"
+            (editar)="aoEditar($event)"
+            (excluir)="aoExcluir($event)"
+            (cortar)="aoCortar($event)"
+            (visualizar)="aoVisualizar($event)"
+            (anexo)="aoVisualizarAnexo($event)"
+            (operacoes)="aoVisualizarOperacoes($event)"
+          ></app-acoes-grid>
+        </td>
+      </ng-container>
+      }
 
-    <!-- Coluna de Ações -->
-    @if (mostrarAcoes()) {
-    <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef class="coluna-acoes">Ações</th>
-      <td mat-cell *matCellDef="let element" class="coluna-acoes">
-        @if (acoesTemplate) {
-        <!-- Template Customizado -->
-        <ng-container
-          *ngTemplateOutlet="acoesTemplate; context: { $implicit: element }"
-        ></ng-container>
-        } @else {
-        <!-- Ações Padrão -->
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="aoEditar(element)"
-          matTooltip="Editar"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="warn"
-          (click)="aoExcluir(element)"
-          matTooltip="Excluir"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
-        }
-      </td>
-    </ng-container>
-    }
+      <tr mat-header-row *matHeaderRowDef="obterColunasComAcoes()"></tr>
+      <tr mat-row *matRowDef="let row; columns: obterColunasComAcoes()"></tr>
+    </table>
+  </div>
 
-    <!-- Definição das linhas -->
-    <tr mat-header-row *matHeaderRowDef="obterColunasComAcoes()"></tr>
-    <tr mat-row *matRowDef="let row; columns: obterColunasComAcoes()"></tr>
-  </table>
-
-  <!-- Paginação Condicional -->
   @if (serverSide()) {
-  <!-- Paginação Server-side -->
   <mat-paginator
     [length]="totalRegistros()"
     [pageIndex]="paginaAtual() - 1"
@@ -66,15 +57,12 @@
     [pageSizeOptions]="[5, 10, 20, 50]"
     (page)="onPaginaAlterada($event)"
     showFirstLastButtons
-  >
-  </mat-paginator>
+  ></mat-paginator>
   } @else {
-  <!-- Paginação Client-side -->
   <mat-paginator
     [pageSizeOptions]="[5, 10, 20, 50]"
     [pageSize]="5"
     showFirstLastButtons
-  >
-  </mat-paginator>
+  ></mat-paginator>
   } }
 </mat-card>

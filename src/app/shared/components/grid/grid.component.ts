@@ -5,8 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   output,
-  ContentChild,
-  TemplateRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,10 +19,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AcoesGridComponent } from '../acoes-grid/acoes-grid.component';
 
 @Component({
   selector: 'app-grid',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     MatCardModule,
@@ -34,93 +35,101 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTooltipModule,
     MatSortModule,
     MatPaginatorModule,
+    AcoesGridComponent,
   ],
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent<T = any> implements AfterViewInit {
-  // Inputs usando signals
+  // Signals (Angular 17+)
   dados = input<T[]>([]);
   colunas = input<string[]>([]);
   nomesColunas = input<Record<string, string>>({});
   mostrarAcoes = input<boolean>(false);
 
-  // Inputs para paginação server-side (opcionais)
+  // Configuração de botões de ação (passa para o componente filho)
+  mostrarEditar = input<boolean>(false);
+  mostrarExcluir = input<boolean>(false);
+  mostrarCortar = input<boolean>(false);
+  mostrarVisualizar = input<boolean>(false);
+  mostrarAnexo = input<boolean>(false);
+  mostrarOperacoes = input<boolean>(false);
+
+  // Paginação
   totalRegistros = input<number>(0);
   paginaAtual = input<number>(1);
   tamanhoPagina = input<number>(5);
   serverSide = input<boolean>(false);
 
-  // Output para comunicar mudanças de página
-  paginaAlterada = output<{ pagina: number; tamanho: number }>();
+  // Estado de loading
+  carregando = input<boolean>(false);
 
-  // Outputs para ações customizáveis
+  // Outputs
+  paginaAlterada = output<{ pagina: number; tamanho: number }>();
   editar = output<T>();
   excluir = output<T>();
-  acaoCustomizada = output<{ acao: string; item: T }>();
+  cortar = output<T>();
+  visualizar = output<T>();
+  anexo = output<T>();
+  operacoes = output<T>();
 
-  // Template customizado para ações
-  @ContentChild('acoesTemplate') acoesTemplate?: TemplateRef<any>;
-
-  // DataSource para a tabela Material com ordenação
   dataSource = new MatTableDataSource<T>([]);
 
-  // ViewChild para acessar o MatSort e MatPaginator
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   constructor() {
-    // Effect para atualizar os dados do dataSource quando dados() mudar
     effect(() => {
       this.dataSource.data = this.dados();
     });
   }
 
   ngAfterViewInit() {
-    // Conecta o MatSort com o dataSource
-    this.dataSource.sort = this.sort;
-
-    // Só conecta o paginator se for client-side
-    if (!this.serverSide()) {
+    // Null-check nos elementos
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+    if (!this.serverSide() && this.paginator) {
       this.dataSource.paginator = this.paginator;
     }
   }
 
-  // Método auxiliar para obter valor da coluna
   obterValorColuna(item: T, coluna: string): any {
     return (item as any)[coluna];
   }
 
-  // Método para obter todas as colunas incluindo ações
   obterColunasComAcoes(): string[] {
     const colunas = this.colunas();
     return this.mostrarAcoes() ? [...colunas, 'acoes'] : colunas;
   }
 
-  // Método para obter nome customizado da coluna
   obterNomeColuna(coluna: string): string {
     const nomes = this.nomesColunas();
     return nomes[coluna] || coluna;
   }
 
-  // Método para lidar com mudanças de página (server-side)
   onPaginaAlterada(event: any) {
-    const novaPagina = event.pageIndex + 1; // MatPaginator usa 0-based
+    const novaPagina = event.pageIndex + 1;
     const novoTamanho = event.pageSize;
     this.paginaAlterada.emit({ pagina: novaPagina, tamanho: novoTamanho });
   }
 
-  // Métodos para ações - emitem eventos para o componente pai
   aoEditar(item: T) {
     this.editar.emit(item);
   }
-
   aoExcluir(item: T) {
     this.excluir.emit(item);
   }
-
-  // Método para ações customizadas
-  aoAcaoCustomizada(acao: string, item: T) {
-    this.acaoCustomizada.emit({ acao, item });
+  aoCortar(item: T) {
+    this.cortar.emit(item);
+  }
+  aoVisualizar(item: T) {
+    this.visualizar.emit(item);
+  }
+  aoVisualizarAnexo(item: T) {
+    this.anexo.emit(item);
+  }
+  aoVisualizarOperacoes(item: T) {
+    this.operacoes.emit(item);
   }
 }
